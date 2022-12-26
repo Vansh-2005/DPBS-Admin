@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "172875439138",
+    "project_id": "dpbs-admin-app",
+    "storage_bucket": "dpbs-admin-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172875439138:android:11dfdb29b1b112c74bbe7b",
+        "android_client_info": {
+          "package_name": "com.example.dpbsadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "172875439138-f67bjv7ugvqeqiae6eghti83bibm4rob.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB-rmx5atwmCQYuUN_8Ex_pW4WVMchCpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "172875439138-f67bjv7ugvqeqiae6eghti83bibm4rob.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
