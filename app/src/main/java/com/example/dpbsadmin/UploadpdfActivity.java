@@ -112,7 +112,8 @@ public class UploadpdfActivity extends AppCompatActivity {
         });
     }
 
-    private void uploadData(String valueOf) {
+    private void uploadData(String downloadurl) {
+
         String uniqueKey = databaseReference.child("pdf").push().getKey();
 
         HashMap data = new HashMap();

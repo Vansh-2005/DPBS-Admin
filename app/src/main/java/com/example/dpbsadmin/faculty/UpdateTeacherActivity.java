@@ -34,10 +34,10 @@ import java.util.HashMap;
 public class UpdateTeacherActivity extends AppCompatActivity {
 
     private ImageView updateTeacherImage;
-    private EditText updateTeacherName,updateTeacherEmail,updateTeacherPost;
-    private Button updateTeacherbtn,deleteTeacherbtn;
-    private String name,email,image,post;
-    private final int REQ =1;
+    private EditText updateTeacherName, updateTeacherEmail, updateTeacherPost;
+    private Button updateTeacherbtn, deleteTeacherbtn;
+    private String name, email, image, post;
+    private final int REQ = 1;
     private Bitmap bitmap = null;
     private String category;
     private String uniqueKey;
@@ -64,8 +64,8 @@ public class UpdateTeacherActivity extends AppCompatActivity {
         deleteTeacherbtn = findViewById(R.id.deleteTeacherbtn);
 
 
-         uniqueKey = getIntent().getStringExtra("Key");
-         category = getIntent().getStringExtra("category");
+        uniqueKey = getIntent().getStringExtra("Key");
+        category = getIntent().getStringExtra("category");
 
         reference = FirebaseDatabase.getInstance().getReference().child("teacher");
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -92,6 +92,7 @@ public class UpdateTeacherActivity extends AppCompatActivity {
                 email = updateTeacherEmail.getText().toString();
                 post = updateTeacherPost.getText().toString();
                 checkValidation();
+
             }
         });
         deleteTeacherbtn.setOnClickListener(new View.OnClickListener() {
@@ -108,32 +109,7 @@ public class UpdateTeacherActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
 
                 Toast.makeText(UpdateTeacherActivity.this, "Teacher deleted succesfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(UpdateTeacherActivity.this,UpdateFaculty.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UpdateTeacherActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-            }
-        });
-          }
-
-    private void updateData(String s) {
-
-        HashMap hp = new HashMap();
-        hp.put("name",name);
-        hp.put("emal",email);
-        hp.put("post",post);
-        hp.put("image",s);
-
-
-        reference.child(category).child(uniqueKey).updateChildren(hp).addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                Toast.makeText(UpdateTeacherActivity.this, "Teacher updated succesfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(UpdateTeacherActivity.this,UpdateFaculty.class);
+                Intent intent = new Intent(UpdateTeacherActivity.this, UpdateFaculty.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -144,20 +120,46 @@ public class UpdateTeacherActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void updateData(String s) {
+
+        HashMap hp = new HashMap();
+        hp.put("name", name);
+        hp.put("email", email);
+        hp.put("post", post);
+        hp.put("image", s);
+
+
+        reference.child(category).child(uniqueKey).updateChildren(hp).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                Toast.makeText(UpdateTeacherActivity.this, "Teacher updated succesfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UpdateTeacherActivity.this, UpdateFaculty.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(UpdateTeacherActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void uploadImage() {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,50,baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
 
         byte[] finalimg = baos.toByteArray();
         final StorageReference filePath;
-        filePath = storageReference.child("Teachers").child(finalimg+"jpg");
+        filePath = storageReference.child("Teachers").child(finalimg + "jpg");
         final UploadTask uploadTask = filePath.putBytes(finalimg);
         uploadTask.addOnCompleteListener(UpdateTeacherActivity.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -172,10 +174,9 @@ public class UpdateTeacherActivity extends AppCompatActivity {
                             });
                         }
                     });
-                }
-                else{
+                } else {
                     //pd.dismiss();
-                    Toast.makeText(UpdateTeacherActivity.this,"Something went wrong",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateTeacherActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -183,30 +184,27 @@ public class UpdateTeacherActivity extends AppCompatActivity {
     }
 
     private void checkValidation() {
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             updateTeacherName.setError("Empty");
             updateTeacherName.requestFocus();
-        }
-        else if(email.isEmpty()){
+        } else if (email.isEmpty()) {
             updateTeacherEmail.setError("Empty");
             updateTeacherEmail.requestFocus();
-        }
-        else if(post.isEmpty()){
+        } else if (post.isEmpty()) {
             updateTeacherPost.setError("Empty");
             updateTeacherPost.requestFocus();
-        }else if(bitmap==null){
+        } else if (bitmap == null) {
             updateData(image);
-        }
-        else
-        {
+        } else {
             uploadImage();
         }
     }
 
-    private void openGallery(){
+    private void openGallery() {
         Intent pickimage = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickimage,REQ);
+        startActivityForResult(pickimage, REQ);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

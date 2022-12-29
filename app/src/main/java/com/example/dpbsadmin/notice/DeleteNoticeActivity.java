@@ -38,7 +38,11 @@ public class DeleteNoticeActivity extends AppCompatActivity {
          reference = FirebaseDatabase.getInstance().getReference().child("Notice");
 
 
-        deleteNoticeRecycler.setLayoutManager(new LinearLayoutManager(this));
+         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+         deleteNoticeRecycler.setLayoutManager(layoutManager);
+         layoutManager.setReverseLayout(true);
+         layoutManager.setStackFromEnd(true);
+//        deleteNoticeRecycler.setLayoutManager(new LinearLayoutManager(this));
         deleteNoticeRecycler.setHasFixedSize(true);
 
         getNotice();

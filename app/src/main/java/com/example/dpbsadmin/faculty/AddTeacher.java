@@ -163,25 +163,73 @@ public class AddTeacher extends AppCompatActivity {
 
     }
     private void insertData() {
-        dbRef = reference.child("Category");
-        final String uniquekey = dbRef.push().getKey();
+        if (category == "Computer Science") {
+            dbRef = reference.child("Computer Science");
+            final String uniquekey = dbRef.push().getKey();
 
-        TeacherData teacherData = new TeacherData(name,email,post,downloadUrl,uniquekey);
-        dbRef.child(uniquekey).setValue(teacherData).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
+            TeacherData teacherData = new TeacherData(name, email, post, downloadUrl, uniquekey);
+            dbRef.child(uniquekey).setValue(teacherData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
 
-                pd.dismiss();
-                Toast.makeText(AddTeacher.this, "Teacher Added", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                pd.dismiss();
-                Toast.makeText(AddTeacher.this,"Something went wrong",Toast.LENGTH_SHORT).show();
-            }
-        });
+                    pd.dismiss();
+                    Toast.makeText(AddTeacher.this, "Teacher Added Succesfully", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pd.dismiss();
+                    Toast.makeText(AddTeacher.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else if (category == "Mathematics"){
+            dbRef = reference.child("Mathematics");
+            final String uniquekey = dbRef.push().getKey();
 
+            TeacherData teacherData = new TeacherData(name, email, post, downloadUrl, uniquekey);
+            dbRef.child(uniquekey).setValue(teacherData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                    pd.dismiss();
+                    Toast.makeText(AddTeacher.this, "Teacher Added Succesfully", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pd.dismiss();
+                    Toast.makeText(AddTeacher.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+        else if(category == "Business Department")
+        {
+            dbRef = reference.child("Business Department");
+            final String uniquekey = dbRef.push().getKey();
+
+            TeacherData teacherData = new TeacherData(name, email, post, downloadUrl, uniquekey);
+            dbRef.child(uniquekey).setValue(teacherData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+
+                    pd.dismiss();
+                    Toast.makeText(AddTeacher.this, "Teacher Added Succesfully", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    pd.dismiss();
+                    Toast.makeText(AddTeacher.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+        else{
+            Toast.makeText(this, "Category not added till now", Toast.LENGTH_SHORT).show();
+        }
 
     }
 

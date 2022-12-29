@@ -48,6 +48,8 @@ public class UpdateFaculty extends AppCompatActivity {
 
         reference= FirebaseDatabase.getInstance().getReference().child("teacher");
         csDepartment();
+        mathsDepartment();
+        bmDepartment();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
